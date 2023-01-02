@@ -1,6 +1,7 @@
 package com.application.foggy.api.v1.transactions;
 
 import com.application.foggy.api.v1.transactions.enums.PAYMENTTYPE;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -19,5 +20,6 @@ public class PaymentTransaction {
     private PAYMENTTYPE paymentType;
     private String reference;
     private String createdBy;
+    @JsonFormat(pattern = "dd-MMM-yyyy hh:mm:ssa")
     private LocalDateTime createdOn;
 }

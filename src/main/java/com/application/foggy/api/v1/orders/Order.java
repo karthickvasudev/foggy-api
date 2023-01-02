@@ -41,6 +41,8 @@ public class Order {
     private LocalDateTime completedDate;
     @JsonFormat(pattern = "dd-MMM-yyyy hh:mm:ssa")
     private LocalDateTime deliveredDate;
+    @JsonFormat(pattern = "dd-MMM-yyyy hh:mm:ssa")
+    private LocalDateTime canceledDate;
     private List<OrderLines> orderLines;
     private OrderPaymentDetails orderPaymentDetails;
     private List<PaymentTransaction> paymentTransaction;

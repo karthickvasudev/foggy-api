@@ -31,4 +31,9 @@ public class CustomersController {
     public Customer phoneNumber(@PathVariable String phoneNumber) {
         return service.getCustomerByPhoneNumber(phoneNumber);
     }
+
+    @PutMapping("{id}")
+    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customer) {
+        return service.updateCustomer(id, customer);
+    }
 }
