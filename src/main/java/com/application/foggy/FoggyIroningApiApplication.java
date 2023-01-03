@@ -11,5 +11,6 @@ public class FoggyIroningApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(FoggyIroningApiApplication.class, args);
     }
+    
 
 }
