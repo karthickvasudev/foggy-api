@@ -1,0 +1,14 @@
+version: "3"
+services:
+  foggy-mongodb:
+    image: mongo:latest
+    container_name: "foggy-mongodb"
+    ports:
+      - 27010:27010
+  foggy-spring-boot-api:
+    build: .
+    container_name: foggy-springboot-api
+    ports:
+      - 8080:8080
+    links:
+      - foggy-mongodb
