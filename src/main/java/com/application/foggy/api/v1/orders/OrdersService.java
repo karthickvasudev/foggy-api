@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -38,7 +39,7 @@ public class OrdersService {
                     Product product = productsService.getProduct(o.getProductId());
                     o.setPrice(o.getCount() * product.getPrice());
                     return o;
-                }).toList());
+                }).collect(Collectors.toList()));
         OrderPaymentDetails orderPaymentDetails = OrderPaymentDetails.builder()
                 .discount(0.0)
                 .balance(order.getOrderLines().stream().mapToDouble(OrderLines::getPrice).sum())
@@ -75,7 +76,7 @@ public class OrdersService {
                     .map(ol -> {
                         ol.setProduct(productsService.getProduct(ol.getProductId()));
                         return ol;
-                    }).toList();
+                    }).collect(Collectors.toList());
             order.setOrderLines(orderLines);
             return order;
         }
@@ -86,7 +87,7 @@ public class OrdersService {
         List<Order> allOrders = repository.findAll();
         return allOrders.stream().map(o -> getOrder(o.getId()))
                 .sorted((o1, o2) -> o2.getOrderDate().compareTo(o1.getOrderDate()))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Order completeOrder(String id) {
@@ -164,7 +165,7 @@ public class OrdersService {
                     Product product = productsService.getProduct(lines.getProductId());
                     lines.setPrice(lines.getCount() * product.getPrice());
                     return lines;
-                }).toList());
+                }).collect(Collectors.toList()));
         OrderPaymentDetails orderPaymentDetails = OrderPaymentDetails.builder()
                 .discount(0.0)
                 .balance(order.getOrderLines().stream().mapToDouble(OrderLines::getPrice).sum())

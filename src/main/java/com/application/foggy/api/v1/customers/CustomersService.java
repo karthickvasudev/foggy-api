@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -38,7 +39,7 @@ public class CustomersService {
         if (customerOpt.isPresent()) {
             Customer customer = customerOpt.get();
             List<Order> orders = ordersRepository.findAllByCustomerId(customer.getId()).stream()
-                    .filter(order -> order.getStatus().equals(ORDERSTATUS.DELIVERED)).toList();
+                    .filter(order -> order.getStatus().equals(ORDERSTATUS.DELIVERED)).collect(Collectors.toList());
             customer.setPendingAmount(orders.stream().mapToDouble(order -> order.getOrderPaymentDetails().getBalance()).sum());
             customer.setAdvanceAmount(orders.stream().mapToDouble(order -> order.getOrderPaymentDetails().getAdvance()).sum());
             return customer;
@@ -47,7 +48,7 @@ public class CustomersService {
     }
 
     public List<Customer> getAllCustomers() {
-        return repository.findAll().stream().map((customer) -> getCustomer(customer.getId())).toList();
+        return repository.findAll().stream().map((customer) -> getCustomer(customer.getId())).collect(Collectors.toList());
     }
 
     public Customer getCustomerByPhoneNumber(String phoneNumber) {

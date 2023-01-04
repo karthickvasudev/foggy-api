@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,12 +33,12 @@ public class PaymentTransactionService {
                 .map(Order::getPaymentTransaction)
                 .flatMap(List::stream)
                 .sorted((o1, o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public List<PaymentTransaction> getAllTransactions() {
         return repository.findAll().stream()
                 .sorted((o1, o2) -> o2.getCreatedOn().compareTo(o1.getCreatedOn()))
-                .toList();
+                .collect(Collectors.toList());
     }
 }
